@@ -1,7 +1,7 @@
 workspace "TrilogyMP"
     configurations { "Debug", "Release" }
     platforms { "x64" }
-    startproject "ClientLauncher"
+    startproject "Client Launcher"
 
     location "../build"
     cppdialect "C++17"
