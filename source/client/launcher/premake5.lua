@@ -30,8 +30,8 @@ project "Client Launcher"
 	filter "system:windows"
 		staticruntime "On"
 		files {
-			"NEU/trilogymp.ico",
-			"NEU/TrilogyMP.gdf.xml",
+			"ext/trilogymp.ico",
+			"ext/TrilogyMP.gdf.xml",
 			"launch.rc",
 			"TrilogyMP.rc",
 			"TrilogyMP.manifest",

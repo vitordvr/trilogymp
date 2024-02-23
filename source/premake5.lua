@@ -43,6 +43,7 @@ workspace "TrilogyMP"
         include "client/core"
         include "client/launcher"
         include "client/loader"
+        include "client/proxy"
 
     group "Vendor"
         include "vendor/detours"
