@@ -47,5 +47,5 @@ workspace "TrilogyMP"
     group "Vendor"
         include "vendor/detours"
 
-    group "Shared"
-        include "shared"
+	group "Shared"
+		include "shared"

@@ -1,5 +1,5 @@
 #include <windows.h>
-#define MTA_CLIENT
+#define TRILOGY_CLIENT
 
 #include <shlwapi.h>
 #include <stdio.h>

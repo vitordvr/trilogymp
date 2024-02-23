@@ -1,2 +1,2 @@
-//  Header File for : Multi Theft Auto
+//  Header File for : TrilogyMP
 #define ID_ICON       101
