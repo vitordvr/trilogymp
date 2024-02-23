@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-16"?>
+<GameDefinitionFile xmlns:baseTypes="urn:schemas-microsoft-com:GamesExplorerBaseTypes.v1" xmlns="urn:schemas-microsoft-com:GameDescription.v1">
+    <GameDefinition gameID="{99604f41-1e84-46fe-8bc9-15de42f8a411}">
+        <Name>TrilogyMP</Name>
+        <Description>Play San Andreas with an all new Multiplayer twist!</Description>
+        <ReleaseDate>2024-02-23</ReleaseDate>
+        <Genres>
+            <Genre>Action</Genre>
+        </Genres>
+        <Version>
+            <VersionNumber versionNumber="0.0.1.0" />
+        </Version>
+        <WindowsSystemPerformanceRating minimum="2.0" recommended="4.0" />
+        <Developers>
+            <Developer URI="https://github.com/codevitor">Trilogy Team</Developer>
+        </Developers>
+        <GameExecutables>
+            <GameExecutable path="TrilogyMP.exe" />
+        </GameExecutables>
+        <ExtendedProperties>
+            <GameTasks>
+                <Play>
+                    <Primary>
+                        <FileTask path="TrilogyMP.exe" arguments="" />
+                    </Primary>
+                </Play>
+                <Support>
+                    <Task index="0" name="Client Manual">
+                        <URLTask Link="https://github.com/codevitor/trilogymp" />
+                    </Task>
+                </Support>
+            </GameTasks>
+        </ExtendedProperties>
+    </GameDefinition>
+</GameDefinitionFile>

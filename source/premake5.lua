@@ -1,23 +1,14 @@
-workspace "DMP"
+workspace "TrilogyMP"
     configurations { "Debug", "Release" }
     platforms { "x64" }
+    startproject "ClientLauncher"
 
     location "../build"
-    targetprefix ""
-    startproject "Client Launcher"
     cppdialect "C++17"
-
+    characterset "MBCS"
     pic "On"
-    symbols "Full"
-    characterset "Unicode"
-    flags { "No64BitChecks", "MultiProcessorCompile" }
-
-    editandcontinue "Off"
-    justmycode "Off"
-
-	buildpath = function(p) return "%{wks.location}/../dist/" .. p .. "/" end
-	copy = function(p) return "{COPY} %{cfg.buildtarget.abspath} \"%{wks.location}../dist/" .. p .. "/\"" end
-	
+    symbols "On"
+    flags "MultiProcessorCompile"
 
     defines {
         "_CRT_SECURE_NO_WARNINGS",
@@ -27,31 +18,34 @@ workspace "DMP"
         "_TIMESPEC_DEFINED"
     }
 
-    filter "platforms:x64"
-        architecture "x86_64"
+    buildpath = function(p) return "%{wks.location}/../dist/" .. p .. "/" end
+	copy = function(p) return "{COPY} %{cfg.buildtarget.abspath} \"%{wks.location}../dist/" .. p .. "/\"" end
 
     filter "configurations:Debug"
-        defines { "DMP_DEBUG" }
+        defines { "TRILOGY_DEBUG" }
         targetsuffix "_d"
 
-    filter { "configurations:Release", "configurations:Nightly" }
+    filter "configurations:Release"
         optimize "Speed"
 
-    filter { 'language:C', 'language:C++' }
-        defines { "GTEST_HAS_PTHREAD=0", "BOOST_ALL_NO_LIB", "BOOST_NULLPTR=nullptr" }
-
-    filter { "system:windows", "configurations:Nightly", "kind:not StaticLib" }
-        symbolspath "$(SolutionDir)Symbols\\$(Configuration)_$(Platform)\\$(ProjectName).pdb"
-
     filter "system:windows"
+        architecture "x86_64"
         toolset "v143"
-        preferredtoolarchitecture "x86_64"
         staticruntime "On"
         buildoptions { "/Zc:__cplusplus" }
+        defines { "WIN32", "_WIN32", "_WIN32_WINNT=0x601", "_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion)" }
 
     filter { "system:windows", "configurations:Debug" }
         runtime "Release"
         defines { "DEBUG" }
 
-    group "client"
+    group "Client"
         include "client/core"
+        include "client/launch"
+        include "client/patcher"
+
+    group "Vendor"
+        include "vendor/detours"
+
+    group "Shared"
+        include "shared"

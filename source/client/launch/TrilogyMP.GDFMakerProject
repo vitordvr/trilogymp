@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-16"?>
+<GDFProject xmlns="urn:schemas-microsoft-com:GDFProject.v1.xsd">
+    <DefaultFileEntry LanguageID="">
+        <RelativePathToProject>ext\TrilogyMP.gdf.xml</RelativePathToProject>
+    </DefaultFileEntry>
+    <ProjectName>TrilogyMP</ProjectName>
+</GDFProject>
