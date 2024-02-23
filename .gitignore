@@ -408,7 +408,7 @@ __pycache__/
 
 
 dist/
-bioçd/
+build/
 InstallFiles/
 utils/DXFiles.zip
 utils/DXFiles/

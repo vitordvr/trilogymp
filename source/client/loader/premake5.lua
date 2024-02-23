@@ -1,7 +1,7 @@
-project "Patcher"
+project "Client Loader"
 	language "C++"
 	kind "SharedLib"
-	targetname "patcher"
+	targetname "loader"
 	targetdir(buildpath("binaries"))
 
 	filter "system:windows"

@@ -41,8 +41,8 @@ workspace "TrilogyMP"
 
     group "Client"
         include "client/core"
-        include "client/launch"
-        include "client/patcher"
+        include "client/launcher"
+        include "client/loader"
 
     group "Vendor"
         include "vendor/detours"
