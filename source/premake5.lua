@@ -40,10 +40,9 @@ workspace "TrilogyMP"
         defines { "DEBUG" }
 
     group "Client"
-        include "client/core"
         include "client/launcher"
         include "client/loader"
-        include "client/proxy"
+        include "client/core"
 
     group "Vendor"
         include "vendor/detours"

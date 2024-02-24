@@ -1,5 +1,7 @@
 #include "Utils.h"
 #include "Main.h"
+#include "Injector.h"
+
 
 BOOL RunGameProcess(const SString& ApplicationName, const SString& CommandLine, const SString& CurrentDirectory,
     LPPROCESS_INFORMATION ProcessInformation, DWORD& dwOutError, SString& strOutErrorContext)
@@ -17,8 +19,10 @@ BOOL RunGameProcess(const SString& ApplicationName, const SString& CommandLine, 
 }
 
 
+
 int LaunchGame()
 {
+
     SString gameExecutable = GetGameExecutable().u8string();
     SString gamePath = GetGamePath();
 
@@ -27,11 +31,22 @@ int LaunchGame()
     DWORD dwError;
     SString errorContext;
 
-
     if (FALSE == RunGameProcess(gameExecutable, "", gamePath, &piLoadee, dwError, errorContext))
     {
         return 0;
     }
+
+    #ifdef TRILOGY_DEBUG
+        SString loaderDllFilename = "core_d.dll";
+    #else
+        SString loaderDllFilename = "core.dll";
+    #endif
+
+    SString launcherPath = PathJoin(GetLaunchPath(), "binaries");
+    SString loaderDllPath = PathJoin(launcherPath, loaderDllFilename);
+
+    Injector::Get()->InjectLib(piLoadee.dwProcessId, loaderDllPath);
+
 
     if (piLoadee.hProcess)
     {
@@ -45,8 +60,10 @@ int LaunchGame()
                 break;
             }
         }
+
+
     }
 
 
-    return 1;
+    return piLoadee.dwProcessId;
 }
