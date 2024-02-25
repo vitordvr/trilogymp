@@ -9,7 +9,7 @@ namespace fs = std::filesystem;
 
 ePathResult DiscoverPath()
 {
-    SString tempGamePath = "E:\\Games\\GTA San Andreas - Definitive Edition\\Gameface\\Binaries\\Win64";
+    SString tempGamePath = "D:\\Games\\GTA\\Gameface\\Binaries\\Win64";
 
     if (!FileExists(PathJoin(tempGamePath, GTA_EXE_NAME)))
     {
@@ -33,19 +33,3 @@ auto GetGameExecutable() -> std::filesystem::path
     static const auto directory = fs::path{ FromUTF8(GetGamePath()) };
     return directory / GTA_EXE_NAME;
 };
-
-
-bool CreateSingleInstanceMutex()
-{
-    HANDLE hMutex = CreateMutex(NULL, FALSE, TEXT(TRILOGY_GUID));
-
-    if (GetLastError() == ERROR_ALREADY_EXISTS)
-    {
-        if (hMutex)
-            CloseHandle(hMutex);
-        return false;
-    }
-    assert(!gs_hMutex);
-    gs_hMutex = hMutex;
-    return true;
-}

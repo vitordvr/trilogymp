@@ -20,7 +20,6 @@
 #ifndef _
 #define _ //Use a dummy localisation define for modules that don't need it
 #endif
-#include "Misc.h"
 
 
 static const char ms_ucTolowerTab[256] = {
@@ -71,10 +70,6 @@ inline T toupper(T c)
 
 #include "SString.h"
 #include "WString.h"
-
-#include "Map.h"
-
-#include "Misc.h"
 #include "Path.h"
 
 using namespace SharedUtil;
