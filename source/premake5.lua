@@ -43,9 +43,7 @@ workspace "TrilogyMP"
         include "client/launcher"
         include "client/loader"
         include "client/core"
-
-    group "Vendor"
-        include "vendor/detours"
+        include "client/sdk"
 
 	group "Shared"
 		include "shared"

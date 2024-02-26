@@ -1,27 +1,25 @@
 #include "StdInc.h"
-#include <iostream>
+#include "Core.h"
 
-void AttachConsoleToApp() {
-    AllocConsole();
+extern Core* gs_Core;
 
-    freopen("CONIN$", "r", stdin);
-    freopen("CONOUT$", "w", stdout);
-    freopen("CONOUT$", "w", stderr);
-}
 
-BOOL WINAPI DllMain(HINSTANCE dll, DWORD reason, LPVOID)
+template <>
+Core* Singleton<Core>::m_pSingleton = NULL;
+
+
+Core::Core()
 {
-    if (reason == DLL_PROCESS_ATTACH)
-    {
+    gs_Core = this;
 
-        AttachConsoleToApp();
-
-
-        std::cout << "Core Injected" << std::endl;
-    } else {
-        FreeConsole();
-    }
+    std::setlocale(LC_ALL, "C");
+    std::setlocale(LC_CTYPE, "");
 
 
-    return TRUE;
+    std::cout << "Core has injected" << std::endl;
+};
+
+
+Core::~Core()
+{
 }

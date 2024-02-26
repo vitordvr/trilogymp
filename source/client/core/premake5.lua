@@ -8,6 +8,13 @@ project "Client Core"
     linkoptions { "/SAFESEH:NO" }
     buildoptions { "-Zm130" }
 
+
+  filter {}
+	 includedirs {
+		".",
+		"../../shared/sdk",
+		"../sdk",
+	 }
   pchheader "StdInc.h"
 	pchsource "StdInc.cpp"
 
@@ -17,6 +24,8 @@ project "Client Core"
 		["Resources/*"] = {"**.rc", "../launch/resource/mtaicon.ico"},
 		["*"] = "premake5.lua"
 	}
+
+	links { "d3d11.lib", "dxgi.lib", "d3dcompiler.lib" }
 
   files {
 		"premake5.lua",

@@ -71,5 +71,6 @@ inline T toupper(T c)
 #include "SString.h"
 #include "WString.h"
 #include "Path.h"
+#include "Common.h"
 
 using namespace SharedUtil;
