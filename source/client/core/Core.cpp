@@ -1,5 +1,13 @@
 #include "StdInc.h"
 #include "Core.h"
+#include <app/Debug.h>
+#include <renderer/Renderer.hpp>
+
+#include <Windows.h>
+#include <delayimp.h>
+#pragma comment(lib, "delayimp")
+
+
 
 extern Core* gs_Core;
 
@@ -8,18 +16,15 @@ template <>
 Core* Singleton<Core>::m_pSingleton = NULL;
 
 
+
+
 Core::Core()
 {
     gs_Core = this;
-
-    std::setlocale(LC_ALL, "C");
-    std::setlocale(LC_CTYPE, "");
-
-
-    std::cout << "Core has injected" << std::endl;
 };
 
 
 Core::~Core()
 {
+    delete gs_Core;
 }

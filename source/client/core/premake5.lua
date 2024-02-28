@@ -14,7 +14,12 @@ project "Client Core"
 		".",
 		"../../shared/sdk",
 		"../sdk",
-	 }
+		"../../vendor/imgui",
+		"../../vendor/imgui/backends",
+		"../../vendor/kiero",
+		"../../vendor/spdlog/include"
+	}
+
   pchheader "StdInc.h"
 	pchsource "StdInc.cpp"
 
@@ -25,13 +30,17 @@ project "Client Core"
 		["*"] = "premake5.lua"
 	}
 
-	links { "d3d11.lib", "dxgi.lib", "d3dcompiler.lib" }
+	defines { 
+	}
+
+	links { "spdlog", "imgui", "kiero", "d3d11.lib", "dxgi.lib", "d3dcompiler.lib" }
+
 
   files {
 		"premake5.lua",
 		"**.h",
 		"**.hpp",
-		"**.cpp"
+		"**.cpp"	
 	}
 
   filter "system:not windows"

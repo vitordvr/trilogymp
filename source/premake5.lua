@@ -45,5 +45,10 @@ workspace "TrilogyMP"
         include "client/core"
         include "client/sdk"
 
+    group "Vendor"
+        include "vendor/kiero"
+        include "vendor/imgui"
+        include "vendor/spdlog"
+
 	group "Shared"
 		include "shared"
