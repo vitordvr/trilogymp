@@ -14,10 +14,8 @@ project "Client Core"
 		".",
 		"../../shared/sdk",
 		"../sdk",
-		"../../vendor/imgui",
-		"../../vendor/imgui/backends",
-		"../../vendor/kiero",
-		"../../vendor/spdlog/include"
+		"../../vendor/spdlog/include",
+		"../../vendor/minhook"
 	}
 
   pchheader "StdInc.h"
@@ -30,11 +28,9 @@ project "Client Core"
 		["*"] = "premake5.lua"
 	}
 
-	defines { 
-	}
+	
 
-	links { "spdlog", "imgui", "kiero", "d3d11.lib", "dxgi.lib", "d3dcompiler.lib" }
-
+	links {  "MinHook", "spdlog" }
 
   files {
 		"premake5.lua",
@@ -42,6 +38,3 @@ project "Client Core"
 		"**.hpp",
 		"**.cpp"	
 	}
-
-  filter "system:not windows"
-  flags { "ExcludeFromBuild" }

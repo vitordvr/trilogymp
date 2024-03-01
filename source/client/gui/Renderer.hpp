@@ -1,9 +1,7 @@
 #pragma once
 
-#ifndef TRILOGY_RENDERER_H
-#define TRILOGY_RENDERER_H
-
 #include <kiero.h>
+
 #include <imgui.h>
 #include <imgui_impl_win32.h>
 #include <imgui_impl_dx11.h>
@@ -11,12 +9,14 @@
 
 #include <d3d11.h>
 
-#include <renderer/Render.hpp>
+#include "Singleton.h"
+#include "Draw.hpp"
+
+#include <algorithm>
+
 
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
-
 
 class Renderer : public Singleton<Renderer> {
 private:
@@ -30,7 +30,6 @@ public:
     renderer_present_t o_present;
     renderer_resize_t o_resize_buffers;
     renderer_wndproc_t o_wnd_proc;
-
 
     HWND window = NULL;
 
@@ -46,4 +45,3 @@ public:
 
     void initialize_imgui();
 };
-#endif

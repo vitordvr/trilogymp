@@ -18,7 +18,7 @@
 #include <imgui_impl_win32.h>
 #include <imgui_internal.h>
 
-#include <renderer/fonts/sffont.hpp>
+#include "fonts/sffont.hpp"
 
 
 // Color Struct Storing rgba value
@@ -32,8 +32,7 @@ struct RGBA {
     int a;
 };
 
-
-class Render : public Singleton<Render> {
+class Draw : public Singleton<Draw> {
 public:
     ImGuiIO io;
 

@@ -8,6 +8,10 @@ project "imgui"
 		".",
 	}
 
+    defines {
+      "IMGUI_IMPL_WIN32_DISABLE_GAMEPAD",
+    }
+
 	vpaths {
 		["Headers/*"] = "**.h",
 		["Sources/*"] = "**.cpp",
@@ -17,8 +21,10 @@ project "imgui"
 	files {
 		"premake5.lua",
 		"**.h",
-    "**.cpp",
+        "**.cpp",
 	}
 
-  cppdialect "C++17"
-	staticruntime "On"
+	filter "system:windows"
+		systemversion "latest"
+		cppdialect "C++17"
+		staticruntime "On"

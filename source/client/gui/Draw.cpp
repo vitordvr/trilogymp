@@ -1,24 +1,22 @@
-#pragma once
-
 #include "StdInc.h"
 #include <fstream>
 #include <iostream>
 #include <ctime>
 #include <sstream>
 
-#include "Render.hpp"
+#include "Draw.hpp"
 
 #define SAFE_RELEASE(pObject) { if(pObject) { (pObject)->Release(); (pObject) = NULL; } }
 
-bool Render::ready() {
+bool Draw::ready() {
     return ptr_device && ptr_context;
 }
 
-void Render::set_resource_load(vResourceLoadCall func) {
+void Draw::set_resource_load(vResourceLoadCall func) {
     load_call = func;
 }
 
-void Render::initialize(HWND target_window, IDXGISwapChain* swapchain) {
+void Draw::initialize(HWND target_window, IDXGISwapChain* swapchain) {
     ImGui::CreateContext();
     io = ImGui::GetIO(); (void)io;
     ptr_swapchain = swapchain;
@@ -100,7 +98,7 @@ void Render::initialize(HWND target_window, IDXGISwapChain* swapchain) {
     m_font = io.Fonts->AddFontFromMemoryCompressedTTF(sfpro_compressed_data, sfpro_compressed_size, 15, nullptr);
 }
 
-void Render::release() {
+void Draw::release() {
     ptr_context->OMSetRenderTargets(0, 0, 0);
     render_target_view->Release();
 
@@ -116,7 +114,7 @@ void Render::release() {
     m_finished_init = false;
 }
 
-void Render::reset(UINT Width, UINT Height) {
+void Draw::reset(UINT Width, UINT Height) {
     ID3D11Texture2D* pBuffer;
     ptr_swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D),
         (void**)&pBuffer);
@@ -138,11 +136,11 @@ void Render::reset(UINT Width, UINT Height) {
     ptr_context->RSSetViewports(1, &vp);
 }
 
-void Render::begin_scene() {
+void Draw::begin_scene() {
     ImGuiIO& io = ImGui::GetIO();
     io.ConfigFlags = ImGuiConfigFlags_NoMouseCursorChange;
 
-
+  
     ImGui_ImplDX11_NewFrame();
     ImGui_ImplWin32_NewFrame();
     ImGui::NewFrame();
@@ -157,11 +155,11 @@ void Render::begin_scene() {
     ImGui::SetWindowSize(ImVec2(io.DisplaySize.x, io.DisplaySize.y), ImGuiCond_Always);
 }
 
-void Render::render() {
+void Draw::render() {
     ImGui::Render();
 }
 
-void Render::end_scene() {
+void Draw::end_scene() {
     ImGuiWindow* window = ImGui::GetCurrentWindow();
     window->DrawList->PushClipRectFullScreen();
 
@@ -180,7 +178,7 @@ bool in_screen(ImVec2 pos) {
     return true;
 }
 
-float Render::render_text(const std::string& text, const ImVec2& position, float size, RGBA color, bool center, bool outline) {
+float Draw::render_text(const std::string& text, const ImVec2& position, float size, RGBA color, bool center, bool outline) {
     ImGuiWindow* window = ImGui::GetCurrentWindow();
 
     std::stringstream stream(text);
@@ -211,40 +209,40 @@ float Render::render_text(const std::string& text, const ImVec2& position, float
     return y;
 }
 
-void Render::render_dot(const ImVec2& from, const ImVec2& to, RGBA color, float thickness) {
+void Draw::render_dot(const ImVec2& from, const ImVec2& to, RGBA color, float thickness) {
     if (in_screen(from) && in_screen(to))
-        Render::render_rect(from, to, color, 5.0f, 0, thickness);
+        Draw::render_rect(from, to, color, 5.0f, 0, thickness);
 }
 
-void Render::render_line(const ImVec2& from, const ImVec2& to, RGBA color, float thickness) {
+void Draw::render_line(const ImVec2& from, const ImVec2& to, RGBA color, float thickness) {
     ImGuiWindow* window = ImGui::GetCurrentWindow();
 
     if (in_screen(from) && in_screen(to))
         window->DrawList->AddLine(from, to, IM_COL32(color.r, color.g, color.b, color.a), thickness);
 }
 
-void Render::render_circle(const ImVec2& position, float radius, RGBA color, float thickness, uint32_t segments) {
+void Draw::render_circle(const ImVec2& position, float radius, RGBA color, float thickness, uint32_t segments) {
     ImGuiWindow* window = ImGui::GetCurrentWindow();
 
     if (in_screen(position))
         window->DrawList->AddCircle(position, radius, IM_COL32(color.r, color.g, color.b, color.a), segments, thickness);
 }
 
-void Render::render_circle_filled(const ImVec2& position, float radius, RGBA color, uint32_t segments) {
+void Draw::render_circle_filled(const ImVec2& position, float radius, RGBA color, uint32_t segments) {
     ImGuiWindow* window = ImGui::GetCurrentWindow();
 
     if (in_screen(position))
         window->DrawList->AddCircleFilled(position, radius, IM_COL32(color.r, color.g, color.b, color.a), segments);
 }
 
-void Render::render_rect(const ImVec2& from, const ImVec2& to, RGBA color, float rounding, uint32_t roundingCornersFlags, float thickness) {
+void Draw::render_rect(const ImVec2& from, const ImVec2& to, RGBA color, float rounding, uint32_t roundingCornersFlags, float thickness) {
     ImGuiWindow* window = ImGui::GetCurrentWindow();
 
     if (in_screen(from) && in_screen(to))
         window->DrawList->AddRect(from, to, IM_COL32(color.r, color.g, color.b, color.a), rounding, roundingCornersFlags, thickness);
 }
 
-void Render::render_rect_filled(const ImVec2& from, const ImVec2& to, RGBA color, float rounding, uint32_t roundingCornersFlags) {
+void Draw::render_rect_filled(const ImVec2& from, const ImVec2& to, RGBA color, float rounding, uint32_t roundingCornersFlags) {
     ImGuiWindow* window = ImGui::GetCurrentWindow();
 
     if (in_screen(from) && in_screen(to))

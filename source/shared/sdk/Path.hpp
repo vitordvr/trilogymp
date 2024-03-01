@@ -232,3 +232,40 @@ SString SharedUtil::ToUTF8(const WString& strPath)
     }
     return pData;
 }
+
+bool SharedUtil::IsShortPathName(const char* szPath)
+{
+    return strchr(szPath, '~') != NULL;
+}
+
+bool SharedUtil::IsShortPathName(const wchar_t* szPath)
+{
+    return wcschr(szPath, '~') != NULL;
+}
+
+SString SharedUtil::GetSystemLongPathName(const SString& strPath)
+{
+    wchar_t szBuffer[32000];
+    szBuffer[0] = 0;
+    if (!GetLongPathNameW(FromUTF8(strPath), szBuffer, NUMELMS(szBuffer) - 1))
+        return strPath;
+    return ToUTF8(szBuffer);
+}
+
+SString SharedUtil::GetSystemDllDirectory()
+{
+    wchar_t szResult[1024] = L"";
+    GetDllDirectoryW(NUMELMS(szResult), szResult);
+    if (IsShortPathName(szResult))
+        return GetSystemLongPathName(ToUTF8(szResult));
+    return ToUTF8(szResult);
+}
+
+SString SharedUtil::GetSystemCurrentDirectory()
+{
+    wchar_t szResult[1024] = L"";
+    GetCurrentDirectoryW(NUMELMS(szResult), szResult);
+    if (IsShortPathName(szResult))
+        return GetSystemLongPathName(ToUTF8(szResult));
+    return ToUTF8(szResult);
+}

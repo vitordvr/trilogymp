@@ -31,6 +31,15 @@ namespace SharedUtil {
     SString GetLaunchPath();
     SString GetLaunchFilename();
 
+    SString GetSystemDllDirectory();
+    SString GetSystemLongPathName(const SString& strPath);
+
+    bool    IsShortPathName(const char* szPath);
+    bool    IsShortPathName(const wchar_t* szPath);
+
+
+    SString GetSystemCurrentDirectory();
+
     namespace File
     {
         int   Mkdir(const char* szPath, int iMode = 0775);

@@ -3,13 +3,12 @@ project "Kiero"
 	language "C++"
 	kind "StaticLib"
 
-	includedirs { "../minhook" }
+	includedirs { "../minHook" }
 
+	links { "MinHook" }
+	
   files {
 		"premake5.lua",
 		"**.h",
     "**.cpp"
 	}
-
-  links {"../minhook/lib/libMinHook-x64-v140-md"}
-  

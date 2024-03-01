@@ -1,7 +1,8 @@
 #include "StdInc.h"
 #include <filesystem>
 #include "app/Debug.h"
-#include "renderer/Renderer.hpp"
+#include <Windows.h>
+
 
 void DisplayConsole()
 {
@@ -33,21 +34,15 @@ void WaitForDebugger() {
 }
 
 
-DWORD WINAPI MainThread(LPVOID lpReserved)
-{
-    auto renderer = Renderer::GetSingletonPtr();
-    renderer->initialize();
-
-    TSA_LOG_DEBUG("Core has been injected to main process.");
-
-    return 1;
-}
-
 Core* gs_Core = NULL;
 HINSTANCE gs_Module = NULL;
 
-BOOL APIENTRY DllMain(HMODULE h_module, uintptr_t dw_reason_for_call, LPVOID lp_reserved) {
 
+
+BOOL APIENTRY DllMain(HMODULE h_module, uintptr_t dw_reason_for_call, LPVOID lp_reserved)
+{
+
+    DisableThreadLibraryCalls(h_module);
 
     if (dw_reason_for_call == DLL_PROCESS_ATTACH)
     {
@@ -70,8 +65,10 @@ BOOL APIENTRY DllMain(HMODULE h_module, uintptr_t dw_reason_for_call, LPVOID lp_
             freopen_s((FILE**)stdout, "CONOUT$", "w", stdout);
         }
 
-        DisableThreadLibraryCalls(h_module);
-        CreateThread(NULL, NULL, reinterpret_cast<LPTHREAD_START_ROUTINE>(MainThread), h_module, NULL, NULL);
+        gs_Core = new Core();
+        gs_Module = h_module;
+
+        SetDllDirectory(CalculePath("binaries"));
 
         return true;
     }

@@ -1,43 +1,27 @@
-// Singleton.h
-#ifndef SINGLETON_H
-#define SINGLETON_H
+#pragma once
 
-#include <cassert>
-
-template <typename T>
+template <class singleton_t>
 class Singleton
 {
 protected:
-    static T* m_pSingleton;
+    Singleton() {}
+    ~Singleton() {}
+
+    Singleton(const Singleton&) = delete;
+    Singleton& operator=(const Singleton&) = delete;
+
+    Singleton(Singleton&&) = delete;
+    Singleton& operator=(Singleton&&) = delete;
 
 public:
-    Singleton()
+    static singleton_t* GetSingletonPtr()
     {
-        assert(!m_pSingleton && "A singleton instance already exists!");
-        m_pSingleton = static_cast<T*>(this);
+        if (!instance_ptr)
+            instance_ptr = new singleton_t;
+
+        return instance_ptr;
     }
 
-    ~Singleton()
-    {
-        m_pSingleton = nullptr;
-    }
-
-    Singleton(const Singleton&) = delete; // Desabilita a cópia
-    Singleton& operator=(const Singleton&) = delete; // Desabilita a atribuição
-
-    static T& GetSingleton()
-    {
-        assert(m_pSingleton && "Singleton instance not created!");
-        return *m_pSingleton;
-    }
-
-    static T* GetSingletonPtr()
-    {
-        return m_pSingleton;
-    }
+private:
+    inline static singleton_t* instance_ptr;
 };
-
-template <typename T>
-T* Singleton<T>::m_pSingleton = nullptr; // Definição da instância estática
-
-#endif // SINGLETON_H
